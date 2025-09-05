@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio - El Chicano</title>
+  <style>
+  /* Style général des boutons */
+button,
+.contact-form button,
+.nav button {
+  background-color: #007BFF; /* bleu moderne par défaut */
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 50px; /* arrondi pill */
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  text-decoration: none; /* utile si le bouton est un <a> */
+}
+
+/* Hover (survol) */
+button:hover,
+.contact-form button:hover,
+.nav button:hover {
+  background-color: #0056b3; /* bleu foncé */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Active (clic) */
+button:active,
+.contact-form button:active,
+.nav button:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Exception pour WhatsApp */
+.whatsapp-btn {
+  background-color: #25D366 !important;
+}
+
+.whatsapp-btn:hover {
+  background-color: #1ebe5d !important;
+}
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: white;
+      background-image: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1920&auto=format&fit=crop");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      scroll-behavior: smooth;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.75);
+      min-height: 100vh;
+      padding-top: 80px;
+    }
+
+    /* Menu de navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    nav h2 {
+      color: cyan;
+      font-size: 1.5em;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: cyan;
+    }
+
+    nav button {
+      display: none;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    header img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid cyan;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: cyan;
+    }
+
+    header p {
+      font-size: 1.2em;
+      font-style: italic;
+      opacity: 0.9;
+    }
+
+    /* Sections */
+    section {
+      max-width: 1100px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 40px;
+      border-radius: 12px;
+      opacity: 0; /* pour fade-in */
+      transform: translateY(20px);
+      transition: all 1s ease;
+    }
+
+    section.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 2.2em;
+      color: cyan;
+      border-bottom: 2px solid cyan;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 1.1em;
+      text-align: center;
+    }
+
+    /* Compétences */
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .skill {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .skill.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .skill:hover {
+      transform: translateY(-10px) scale(1.05);
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Projets */
+    .projets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .card.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.05);
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Bouton Voir projet */
+    .btn-projet {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      background: cyan;
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-projet:hover {
+      background: white;
+      color: black;
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+    }
+
+    /* Témoignages */
+    .temoignages {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .testimonial {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-style: italic;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .testimonial.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .testimonial:hover {
+      transform: translateY(-10px) scale(1.05);
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .testimonial img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      border: 2px solid cyan;
+    }
+
+    .testimonial h3 {
+      margin: 10px 0 5px;
+      color: cyan;
+    }
+
+    .testimonial p {
+      font-size: 0.95em;
+      opacity: 0.9;
+    }
+
+    /* Contact */
+    .contact {
+      text-align: center;
+      font-size: 1.1em;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s ease;
+    }
+
+    .contact.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .contact a {
+      color: cyan;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin: 5px 0;
+    }
+
+    /* Formulaire Contact */
+    .contact-form {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      padding: 12px;
+      border: 2px solid cyan;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      font-size: 1em;
+      transition: all 0.3s ease;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      background: rgba(0, 255, 255, 0.1);
+      border-color: white;
+    }
+
+    .contact-form button {
+      background: cyan;
+      color: black;
+      font-weight: bold;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .contact-form button:hover {
+      background: white;
+      color: black;
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      opacity: 0.7;
+      padding: 15px;
+    }
+
+    /* Responsive menu */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        background: rgba(0, 0, 0, 0.9);
+        position: absolute;
+        top: 60px;
+        right: 0;
+        padding: 15px;
+        display: none;
+      }
+
+      nav ul.show {
+        display: flex;
+        animation: fadeInMenu 0.4s ease forwards;
+      }
+
+      @keyframes fadeInMenu {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      nav button {
+        display: block;
+        background: none;
+        border: 2px solid cyan;
+        color: cyan;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Popup de bienvenue Premium -->
+<div id="welcomePopup" style="
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.3) url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f') no-repeat center center/cover;
+">
+  <div style="
+    position: relative;
+    background: rgba(0,0,0,0.9);
+    padding: 50px 40px;
+    text-align: center;
+    border-radius: 25px;
+    max-width: 500px;
+    color: white;
+    animation: slideInPremium 1s ease-out, floatAnimPremium 3s ease-in-out infinite alternate;
+    box-shadow: 0 0 50px rgba(0,255,255,0.6);
+    overflow: hidden;
+  ">
+    <!-- Halo lumineux animé -->
+    <div style="
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(0,255,255,0.2) 0%, transparent 70%);
+      animation: haloPulsePremium 2.5s ease-in-out infinite alternate;
+      z-index: 0;
+    "></div>
+
+    <!-- Texte en néon -->
+    <h1 style="
+      color: cyan;
+      text-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 20px cyan;
+      margin-bottom: 20px; font-size:2.2em;
+      position: relative; z-index:1;
+      animation: neonGlow 1.5s ease-in-out infinite alternate;
+    ">Bienvenue sur mon Portfolio</h1>
+
+
+
+    <!-- Bouton futuriste -->
+    <button onclick="closePopup()" style="
+      background: cyan;
+      color: black;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.1em;
+      cursor: pointer;
+      box-shadow: 0 0 15px cyan, 0 0 30px cyan, 0 0 45px cyan;
+      transition: all 0.3s ease;
+      position: relative; z-index:1;
+    " onmouseover="this.style.boxShadow='0 0 25px cyan, 0 0 50px cyan, 0 0 75px cyan'" onmouseout="this.style.boxShadow='0 0 15px cyan, 0 0 30px cyan, 0 0 45px cyan'">
+      Entrer
+    </button>
+  </div>
+</div>
+
+<style>
+@keyframes slideInPremium {
+  from {opacity:0; transform: translateY(-50px) scale(0.95);}
+  to {opacity:1; transform: translateY(0) scale(1);}
+}
+
+@keyframes floatAnimPremium {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+@keyframes haloPulsePremium {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.1); opacity: 0.3; }
+}
+
+@keyframes neonGlow {
+  0% { text-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 20px cyan; }
+  50% { text-shadow: 0 0 15px cyan, 0 0 30px cyan, 0 0 45px cyan; }
+  100% { text-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 20px cyan; }
+}
+</style>
+
+<script>
+function closePopup() {
+  document.getElementById('welcomePopup').style.display = 'none';
+}
+
+// Fermer automatiquement après 6 secondes
+setTimeout(closePopup, 10000);
+</script>
+  <!-- Menu -->
+  <nav>
+    <h2>El Chicano</h2>
+    <button onclick="toggleMenu()">☰</button>
+    <ul id="menu">
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#apropos">À propos</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#temoignages">Témoignages</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="overlay">
+    <!-- Header -->
+    <header id="accueil" class="fade-in">
+      <img src="https://i.postimg.cc/T2L7hM8h/IMG-20250723-WA0014-1.jpg" alt="Photo de profil">
+      <h1>El Chicano</h1>
+      <p>Expert en Développement Web & Solutions Digitales</p>
+    </header>
+
+    <!-- À propos -->
+    <section id="apropos">
+      <h2>À propos</h2>
+      <p>
+        Je suis El Chicano, développeur web passionné, spécialisé dans la création de sites modernes,
+        applications web & mobiles, et solutions digitales innovantes. 
+        Mon objectif : transformer vos idées en projets concrets et performants.
+      </p>
+    </section>
+
+    <!-- Compétences -->
+    <section id="competences">
+      <h2>Compétences</h2>
+      <div class="skills">
+        <div class="skill">💻 Développement Web (HTML, CSS, JS, PHP, PYTHON)</div>
+        
+        <div class="skill">🔒 Cybersécurité & Hacking Éthique</div>
+        
+      </div>
+    </section>
+
+    <!-- Projets -->
+    <section id="projets">
+      <h2>Mes Projets</h2>
+      <div class="projets">
+        <div class="card">
+          <h3>🌐 Site E-commerce</h3>
+          <p>Plateforme de vente d’eBooks avec design moderne et système de paiement sécurisé.</p>
+          <a href="https://ebooks-store-9axo.vercel.app" target="_blank" class="btn-projet">🔗 Voir le projet</a>
+        </div>
+        <div class="card">
+          <h3>🕰️ Une horloge numérique</h3>
+          <p>Un site au design épuré qui présente une horloge numérique moderne.</p>
+          <a href="https://chicano-portfo.vercel.app" target="_blank" class="btn-projet">🔗 Voir le projet</a>
+        </div>
+        <div class="card">
+          <h3>🔢 Calculatrice</h3>
+          <p>Une calculatrice scientifique au design futuriste avec fonctions avancées</p>
+          <a href="https://calculatrice-chicano.vercel.app" target="_blank" class="btn-projet">🔗 Voir le projet</a>
+        </div>
+        <div class="card">
+          <h3>🎮 Jeu d’Échecs 3D</h3>
+          <p>Un jeu responsive avec IA à plusieurs niveaux, design moderne et immersif.</p>
+          <a href="jeu-d-checs.vercel.app" target="_blank" class="btn-projet">🔗 Voir le projet</a>
+        </div>
+        <div class="card">
+        <h3>🔗 Fake link detector </h3>
+        <p>Outil pour détecter les faux lien et éviter les arnaques liées au phishing</p>
+        <a href="https://fake-link-detector-2rxa.vercel.app/" target="_blank" class="btn-projet">🔗 Voir le projet </a>
+      </div>
+      </div>
+    </section>
+
+    <!-- Témoignages -->
+    <section id="temoignages">
+      <h2>Témoignages</h2>
+      <div class="temoignages">
+        <div class="testimonial">
+          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client 1">
+          <h3>Marie Dupont</h3>
+          <p>“Professionnalisme, créativité et ponctualité : trois mots qui résument parfaitement son travail.” </p>
+        </div>
+        <div class="testimonial">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client 2">
+          <h3>Jean-Pierre K.</h3>
+          <p>“Un développeur sérieux, réactif et créatif. Je recommande à 100 % !”</p>
+        </div>
+        <div class="testimonial">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client 3">
+          <h3>Sophie Lemaire</h3>
+          <p>"El chicano est un excellent développeur. Il a crée mon site en moins de 2 jours."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="contact">
+        <p>📧 Email : <a href="mailto:elchicano798.@gmail.com">elchicano798.@gmail.com</a></p>
+        
+        <p>💻 GitHub : <a href="https://github.com/chicano6">https://github.com/chicano6</a></p>
+       </div> <br> <br> <h2> Me contacter par WhatsApp </h2>
+
+      <!-- Formulaire WhatsApp -->
+      <form class="contact-form" onsubmit="sendWhatsApp(event)">
+        <input type="text" id="name" placeholder="Votre nom" required>
+        <input type="email" id="email" placeholder="Votre email" required>
+        <textarea id="message" rows="5" placeholder="Votre message" required></textarea>
+        <button type="submit">📩 Envoyer via WhatsApp</button>
+      </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      © 2025 - Mon portfolio professionnel | Tous droits réservés 
+    </footer>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("show");
+    }
+
+    // Fade-in au scroll
+    const faders = document.querySelectorAll('section, .skill, .card, .testimonial, .contact');
+
+    const appearOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const appearOnScroll = new IntersectionObserver(function(entries, observer){
+      entries.forEach(entry => {
+        if(!entry.isIntersecting) return;
+        entry.target.classList.add('fade-in');
+        observer.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+
+    // Envoi WhatsApp avec validation
+    function sendWhatsApp(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("⚠️ Veuillez entrer un email valide.");
+        return;
+      }
+
+      if (message.length < 10) {
+        alert("⚠️ Le message doit contenir au moins 10 caractères.");
+        return;
+      }
+
+      const phone = "2250170084995"; // format international sans "+"
+      const text = `Bonjour, je suis ${name} (${email}).%0A%0A${message}`;
+      const url = `https://wa.me/${phone}?text=${text}`;
+
+      alert("✅ Votre message est prêt à être envoyé sur WhatsApp !");
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+</html>
